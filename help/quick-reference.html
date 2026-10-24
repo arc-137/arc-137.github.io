@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arc Quick Reference</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --paper: #ffffff; --ink: #24262b; --muted: #5d6169; --line: #dedbd3;
+    --accent: #5b3a8e; --accent-soft: #efe8f7; --code: #f0eee8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1d21; --paper: #24272c; --ink: #e8e6e1; --muted: #a7abb3; --line: #3a3e45;
+      --accent: #c4a8ef; --accent-soft: #2b2340; --code: #2e3137;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1d21; --paper: #24272c; --ink: #e8e6e1; --muted: #a7abb3; --line: #3a3e45;
+    --accent: #c4a8ef; --accent-soft: #2b2340; --code: #2e3137;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .bar { max-width: 1180px; margin: 0 auto; padding: 16px 16px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .bar p { margin: 0; color: var(--muted); }
+  .bar .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { font: inherit; font-size: .9rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  a { color: var(--accent); }
+  .sheet { max-width: 1180px; margin: 12px auto 40px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .head h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.01em; }
+  .head span { color: var(--muted); font-size: .9rem; }
+  .cols { columns: 4 240px; column-gap: 18px; }
+  .box { break-inside: avoid; margin: 0 0 12px; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .07em; color: var(--accent); margin: 0 0 4px; padding-bottom: 2px; border-bottom: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 1.5px 0; vertical-align: top; }
+  td:first-child { white-space: nowrap; padding-right: 8px; width: 1%; }
+  kbd, code { font: 600 .82em/1.2 ui-monospace, Consolas, monospace; background: var(--code); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+  code { font-weight: 500; border: 0; }
+  .ui { font-weight: 600; }
+  ul { margin: 0; padding-left: 15px; }
+  li { margin: 1px 0; }
+  .note { color: var(--muted); font-size: .88em; margin: 3px 0 0; }
+  .foot { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 6px; color: var(--muted); font-size: .85rem; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  @page { size: letter landscape; margin: 0.32in; }
+  @media print {
+    :root { --bg: #fff; --paper: #fff; --ink: #000; --muted: #444; --line: #bbb; --accent: #4b2f73; --code: #eee; }
+    body { font-size: 7.6pt; line-height: 1.32; }
+    .bar { display: none; }
+    .sheet { margin: 0; max-width: none; border: 0; padding: 0; border-radius: 0; }
+    .cols { columns: 4; column-gap: 14px; }
+    .box { margin-bottom: 7px; }
+    .head h1 { font-size: 14pt; }
+    .head span, .foot { font-size: 7pt; }
+    a { color: inherit; text-decoration: none; }
+  }
+  @media (max-width: 640px) { .sheet { padding: 14px; } }
+</style>
+</head>
+<body>
+<div class="bar">
+  <p>One page, made to print on Letter or A4 paper, landscape.</p>
+  <div class="btns">
+    <a class="btn" href="user-guide.html">User guide</a>
+    <a class="btn" href="videos.html">Video lessons</a>
+    <button class="btn primary" type="button" onclick="print()">Print</button>
+  </div>
+</div>
+
+<div class="sheet">
+  <div class="head">
+    <h1>Arc quick reference</h1>
+    <span>Draw a house or building, see it in 3D, and make the drawings · Arc 0.72.0</span>
+  </div>
+  <div class="cols">
+
+    <div class="box">
+      <h2>Tools (left bar)</h2>
+      <table>
+        <tr><td><kbd>V</kbd></td><td>Select</td></tr>
+        <tr><td><kbd>E</kbd></td><td>Measuring tape</td></tr>
+        <tr><td><kbd>W</kbd></td><td>Wall</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Room (four walls at once)</td></tr>
+        <tr><td><kbd>D</kbd> / <kbd>N</kbd></td><td>Door / Window</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Stairs</td></tr>
+        <tr><td><kbd>A</kbd></td><td>Floors &amp; baseboards</td></tr>
+        <tr><td><kbd>O</kbd></td><td>Outdoor: patios, decks, fences, lot lines</td></tr>
+        <tr><td><kbd>U</kbd></td><td>MEP: ducts, pipes &amp; wires</td></tr>
+        <tr><td><kbd>F</kbd> / <kbd>G</kbd></td><td>Roof / Porch</td></tr>
+        <tr><td><kbd>K</kbd></td><td>Paint &amp; materials</td></tr>
+        <tr><td><kbd>Y</kbd></td><td>Decorate (colour palettes)</td></tr>
+        <tr><td><kbd>B</kbd></td><td>Blocks: furniture, cabinets, fixtures</td></tr>
+        <tr><td><kbd>M</kbd> / <kbd>C</kbd></td><td>Move / Duplicate</td></tr>
+        <tr><td><kbd>Q</kbd> / <kbd>X</kbd></td><td>Rotate / Mirror</td></tr>
+        <tr><td><kbd>Del</kbd></td><td>Delete what's selected</td></tr>
+      </table>
+      <p class="note">The letter in each tool's corner is its key. The status bar at the bottom always says what to click next.</p>
+    </div>
+
+    <div class="box">
+      <h2>Everyday keys</h2>
+      <table>
+        <tr><td><kbd>Esc</kbd></td><td>Finish or cancel; back to Select</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Use the size you typed</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Y</kbd></td><td>Undo / Redo</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd> / <kbd>P</kbd></td><td>Save / print this floor plan</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>Lock the selection (click it to unlock)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> <kbd>V</kbd> <kbd>X</kbd></td><td>Copy, paste (into any plan), cut</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Search for any command</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Preferences</td></tr>
+        <tr><td><kbd>Z</kbd></td><td>Zoom to fit the plan</td></tr>
+        <tr><td><kbd>F</kbd></td><td>While drawing: flip the wall's side, or a door's hinge</td></tr>
+        <tr><td><kbd>D</kbd></td><td>Measuring: keep the last leg as a dimension</td></tr>
+        <tr><td><kbd>Shift</kbd>+click</td><td>Add to (or take from) the selection</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>Typing sizes</h2>
+      <p style="margin:0 0 3px">While a tool waits for a click, just type, then press <kbd>Enter</kbd>. It shows in the <b>Size</b> box.</p>
+      <table>
+        <tr><td><code>14'6"</code> <code>14'-6"</code></td><td>Feet and inches</td></tr>
+        <tr><td><code>14' 6 1/2"</code></td><td>With fractions</td></tr>
+        <tr><td><code>174"</code> <code>14.5'</code></td><td>All inches, or decimal feet</td></tr>
+        <tr><td><code>3600mm</code> <code>3.6m</code></td><td>Metric works in any plan</td></tr>
+        <tr><td><code>12'&lt;45</code></td><td>Wall or line: length at an angle</td></tr>
+        <tr><td><code>32' x 24'</code></td><td>Room: width by depth</td></tr>
+        <tr><td><code>2'6"</code></td><td>Door or window: distance from the blue end</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>Drawing walls and rooms</h2>
+      <ul>
+        <li><b>Wall</b>: click the start, then each corner. Right-click, double-click or <kbd>Esc</kbd> to stop. Click the first corner to close a room.</li>
+        <li>Rooms are found by themselves when walls close a space. Select one to name it and set its floor and ceiling.</li>
+        <li>Drag a wall to push it; drag a blue grip to move an end.</li>
+        <li><b>Snap ▾</b>: angle lock, Snap to walls, Round to, ft-in or mm. Hold <kbd>Shift</kbd> to free the angle for a moment.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Doors and windows</h2>
+      <ul>
+        <li>Hover over a wall to see the distance to each end; click to place.</li>
+        <li>The door swings to the side your cursor is on; <kbd>F</kbd> flips the hinge.</li>
+        <li><b>Several at once</b> (panel): set <b>How many</b>, then Equal sections, Equal gaps, Centred on the wall, From the end, or From where I click. One click places them all.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Selecting</h2>
+      <ul>
+        <li>Click to select; the panel on the right shows its settings.</li>
+        <li>Drag a box <b>left → right</b>: things fully inside. <b>Right → left</b>: anything it touches.</li>
+        <li>Nothing selected: the panel shows the <b>Project</b> and the <b>Design check</b>.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Moving around the plan</h2>
+      <table>
+        <tr><td>Wheel</td><td>Zoom toward the cursor</td></tr>
+        <tr><td>Right / middle drag</td><td>Pan</td></tr>
+        <tr><td><kbd>Space</kbd> + drag</td><td>Pan</td></tr>
+        <tr><td><kbd>Z</kbd></td><td>Zoom to fit (or the corners icon on the top bar)</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>iPad: fingers and Pencil</h2>
+      <table>
+        <tr><td>Pencil</td><td>Draws; hover to see the preview; double-tap for Select</td></tr>
+        <tr><td>One finger</td><td>Pans and taps to select once a Pencil is used (draws before that, or with Fingers draw on)</td></tr>
+        <tr><td>Two fingers</td><td>Pan and pinch to zoom</td></tr>
+        <tr><td>Two-finger tap</td><td>Undo</td></tr>
+        <tr><td>Long press</td><td>Right-click (finish a wall)</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>The 3D view</h2>
+      <table>
+        <tr><td>Drag</td><td>Orbit (one finger)</td></tr>
+        <tr><td>Right drag</td><td>Pan (two fingers)</td></tr>
+        <tr><td>Wheel</td><td>Zoom (pinch)</td></tr>
+        <tr><td>Double-click</td><td>Centre on that spot</td></tr>
+        <tr><td>Go inside…</td><td>Stand in a room: drag to look, wheel to step</td></tr>
+        <tr><td>Walk</td><td><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrows, drag to look, <kbd>F</kbd> flies, <kbd>Esc</kbd> stops</td></tr>
+        <tr><td>Compass</td><td>Click a letter for a square view</td></tr>
+      </table>
+      <p class="note">View list: Full model, Framing, MEP, Roof off, X-ray, Wireframe. <b>Sun</b> for real shadows, <b>Render</b> for a photo-like picture.</p>
+    </div>
+
+    <div class="box">
+      <h2>Top bar menus</h2>
+      <table>
+        <tr><td class="ui">File</td><td>New, templates, open, samples, save, imports (DXF, DWG, PDF, scans)</td></tr>
+        <tr><td class="ui">Export</td><td>Render, PDF, DXF, DWG, IFC, 3D models, takeoff</td></tr>
+        <tr><td class="ui">Design</td><td>Style packs, kitchens, closets, room layouts, furnish, specs, code summary, schedules</td></tr>
+        <tr><td class="ui">View</td><td>What 3D shows; plan overlays</td></tr>
+        <tr><td class="ui">Draw</td><td>Lines, text, hatch, dimensions, sections, 3D shapes, terraces</td></tr>
+        <tr><td class="ui">Modify</td><td>Offset, trim, fillet, array, align, copy &amp; paste</td></tr>
+        <tr><td class="ui">Show</td><td>Dimensions, grid, floor patterns, wall fill</td></tr>
+        <tr><td class="ui">Sheets</td><td>Drawing sheets with a title block, to PDF</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>AutoCAD keys (button, bottom right)</h2>
+      <table>
+        <tr><td><code>L PL REC C A</code></td><td>Line, polyline, rectangle, circle, arc</td></tr>
+        <tr><td><code>H DIM T</code></td><td>Hatch, dimension, text</td></tr>
+        <tr><td><code>M CO RO MI SC</code></td><td>Move, duplicate, rotate, mirror, scale</td></tr>
+        <tr><td><code>O TR EX F AR</code></td><td>Offset, trim, extend, fillet, array</td></tr>
+        <tr><td><code>W I BOX</code></td><td>Wall, insert a block, 3D shape</td></tr>
+        <tr><td><code>E U Z</code></td><td>Erase, undo, zoom to fit</td></tr>
+        <tr><td><code>PLOT TAKEOFF</code></td><td>PDF, takeoff &amp; costs</td></tr>
+      </table>
+      <p class="note">Type the letters, then <kbd>Enter</kbd> or <kbd>Space</kbd>. <kbd>Space</kbd> alone repeats the last command.</p>
+    </div>
+
+    <div class="box">
+      <h2>3D printing and photos</h2>
+      <table>
+        <tr><td class="ui">3D Print</td><td>Top bar: the workspace, in seven sections</td></tr>
+        <tr><td>1 · 2</td><td>Printer and bed · model ground, plates, colour change</td></tr>
+        <tr><td>3 · 4</td><td>Surfaces (cobbles, bricks) · printed inserts and snow</td></tr>
+        <tr><td>5 · 6 · 7</td><td>Parts list and $ · check and save · watch-outs</td></tr>
+        <tr><td>Fit test</td><td>Section 1: tab, pegs and colour step to print first</td></tr>
+        <tr><td class="ui">Photo eraser</td><td>Export ▾ → Touch up a photo: brush, then Erase</td></tr>
+      </table>
+    </div>
+
+    <div class="box">
+      <h2>Getting help</h2>
+      <ul>
+        <li><kbd>Ctrl</kbd>+<kbd>K</kbd>: type what you want to do (<code>stairs</code>, <code>pdf</code>, <code>sofa</code>).</li>
+        <li><b>?</b> on a panel heading opens the guide at that topic.</li>
+        <li><b>Guide ▾</b> on the top bar: every video lesson, the hands-on lessons and the user guide.</li>
+        <li><b>Guide ▾ → Hands-on lessons…</b>: build a small house step by step.</li>
+        <li><b>Video lessons</b>: short videos, start to finish.</li>
+        <li><b>File ▾ → Samples…</b>: finished plans to explore.</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="foot">
+    <span>Design check warnings: <b>Show</b> finds it, <b>Ignore</b> sets it aside, <b>Note</b> keeps your reason with the plan.</span>
+    <span>Code checks are a guide for early design; a licensed professional and the building official have the final say.</span>
+  </div>
+</div>
+<button type="button" id="back-to-arc" class="back-to-arc" aria-label="Back to Arc">&lsaquo; Back to Arc</button>
+<style>
+  .back-to-arc { position: fixed; z-index: 50; bottom: max(16px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); padding: 8px 14px; border: 0; border-radius: 999px; background: #2e1c47; color: #fff; font: 600 14px/1 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 4px 14px rgba(46, 28, 71, .3); border-left: 4px solid #2ec4b6; cursor: pointer; }
+  .back-to-arc:hover { background: #4b2f73; }
+  .back-to-arc:focus-visible { outline: 2px solid #2ec4b6; outline-offset: 2px; }
+  @media print { .back-to-arc { display: none !important; } }
+</style>
+<script>
+  // Inside Arc's help viewer: ask Arc to close it (the viewer's bar has the same button, so this one hides).
+  // In its own window: close the window. Otherwise go back.
+  if (window.parent !== window) document.getElementById('back-to-arc').hidden = true;
+  document.getElementById('back-to-arc').addEventListener('click', () => {
+    if (window.parent !== window) { window.parent.postMessage({ arc: 'close-help' }, '*'); return; }
+    if (window.opener) window.close();
+    setTimeout(() => { if (!window.closed) { if (history.length > 1) history.back(); else location.href = '../index.html'; } }, 200);
+  });
+</script><script src="res.js"></script></body>
+</html>
