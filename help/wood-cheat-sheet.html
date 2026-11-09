@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wood Cheat Sheet</title>
+<style>
+  :root {
+    --bg: #f5f4f8; --paper: #ffffff; --ink: #1e1830; --muted: #5d5670; --line: #dcd8e5;
+    --accent: #6a3fa0; --teal: #157f76; --chip: #ece6f5; --chip-teal: #ddf3f0;
+    --warn-bg: #fff4e0; --warn-fg: #6b4300; --no: #b2412a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15111d; --paper: #1f1a2a; --ink: #ece8f3; --muted: #a9a1ba; --line: #352e44; --accent: #c4a0e6; --teal: #7ae0d6;
+      --chip: #2d2440; --chip-teal: #17332f; --warn-bg: #33270f; --warn-fg: #f3d49a; --no: #f08a72;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15111d; --paper: #1f1a2a; --ink: #ece8f3; --muted: #a9a1ba; --line: #352e44; --accent: #c4a0e6; --teal: #7ae0d6;
+    --chip: #2d2440; --chip-teal: #17332f; --warn-bg: #33270f; --warn-fg: #f3d49a; --no: #f08a72;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 16px 16px 56px; display: grid; gap: 22px; }
+  h1, h2, h3 { margin: 0; line-height: 1.15; }
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: 1rem; }
+  p { margin: 0; }
+  .bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .bar p { color: var(--muted); }
+  .btn { font: inherit; font-size: .9rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .eyebrow { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); font-weight: 700; }
+  .muted { color: var(--muted); }
+  .small { font-size: .84rem; }
+  header { display: grid; gap: 6px; }
+  .key { display: flex; gap: 10px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); align-items: center; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 10px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; break-inside: avoid; }
+  .card canvas { display: block; width: 100%; height: 30px; }
+  .card .b { padding: 9px 12px 11px; display: grid; gap: 4px; font-size: .85rem; align-content: start; }
+  .card .t { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .card .nums { font-family: ui-monospace, Consolas, monospace; font-size: .72rem; color: var(--muted); white-space: nowrap; }
+  .card .no { color: var(--no); }
+  .tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .chip { font-family: ui-monospace, Consolas, monospace; font-size: .68rem; padding: 1px 7px; border-radius: 999px; background: var(--chip); white-space: nowrap; }
+  .chip.out { background: var(--chip-teal); }
+  .chip.dust { background: var(--warn-bg); color: var(--warn-fg); }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 12px; }
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  table { border-collapse: collapse; width: 100%; font-size: .85rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  section { display: grid; gap: 8px; }
+  .box { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; display: grid; gap: 6px; font-size: .87rem; break-inside: avoid; }
+  .formula { font-family: ui-monospace, Consolas, monospace; font-size: .9rem; background: var(--chip); border-radius: 6px; padding: 5px 10px; }
+  .note { background: var(--warn-bg); color: var(--warn-fg); border-radius: 8px; padding: 8px 12px; font-size: .86rem; }
+  .back-to-arc { position: fixed; z-index: 50; bottom: max(16px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); padding: 8px 14px; border: 0; border-radius: 999px; background: #2e1c47; color: #fff; font: 600 14px/1 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 4px 14px rgba(46, 28, 71, .3); border-left: 4px solid #2ec4b6; cursor: pointer; }
+  .back-to-arc:hover { background: #4b2f73; }
+  @page { size: letter portrait; margin: 0.4in; }
+  @media print {
+    :root { --bg: #fff; --paper: #fff; --ink: #000; --muted: #444; --line: #bbb; --accent: #4b2f73; --teal: #1f5a50; --chip: #eee; --chip-teal: #e2f2ef; --warn-bg: #fff4e0; --warn-fg: #5a3800; --no: #8a2a18; }
+    body { font-size: 8.4pt; line-height: 1.3; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .wrap { padding: 0; gap: 10px; max-width: none; }
+    .bar, .back-to-arc { display: none !important; }
+    /* (Four across: every wood's card on the first page.) */
+    .cards { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .card .b { font-size: 7.2pt; line-height: 1.24; padding: 4px 6px 5px; gap: 2px; }
+    .card canvas { height: 16px; }
+    .two { grid-template-columns: 1fr 1fr; gap: 8px; }
+    table { font-size: 7.6pt; }
+    th, td { padding: 2px 6px; }
+    .box { font-size: 7.8pt; padding: 6px 8px; }
+    h1 { font-size: 15pt; }
+    h2 { font-size: 10.5pt; }
+    .tables { break-before: page; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <p>Which wood for which job, and the real sizes behind the names on the rack. Prints on two Letter or A4 pages.</p>
+    <div><a class="btn" href="Arc-Wood-Cheat-Sheet.pdf" download>PDF</a> <button class="btn primary" type="button" onclick="print()">Print</button></div>
+  </div>
+  <header>
+    <span class="eyebrow">Arc Hobby · quick reference</span>
+    <h1>Wood cheat sheet</h1>
+    <div class="key"><span><b>Hardness</b>: Janka, pounds of force (higher is harder)</span><span><b>Weight</b>: lb per cubic foot, dried</span><span class="chip out">outdoors</span><span class="chip">blotchy stain</span><span class="chip dust">dust mask</span></div>
+  </header>
+
+  <section>
+    <h2>The woods</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="two tables">
+    <div style="display:grid;gap:6px">
+      <h2>Board sizes: name and real size</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>Name</th><th>Real size</th><th>Common use</th></tr></thead>
+        <tbody id="boards"></tbody>
+      </table></div>
+      <p class="small muted">Sold in 6, 8, 10 and 12 ft lengths (2× also 16 ft). The name is the size before drying and planing; the real size is what you measure.</p>
+    </div>
+    <div style="display:grid;gap:6px">
+      <h2>Plywood and sheets</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>Name</th><th>Really</th><th>Common use</th></tr></thead>
+        <tbody>
+          <tr><td>¼″ plywood</td><td>about 7⁄32″ (5.5 mm)</td><td>drawer bottoms, cabinet backs</td></tr>
+          <tr><td>½″ plywood</td><td>about 15⁄32″ (12 mm)</td><td>drawer sides, small boxes</td></tr>
+          <tr><td>¾″ plywood</td><td>about 23⁄32″ (18 mm)</td><td>cabinets, shelves, desks</td></tr>
+          <tr><td>Baltic birch</td><td>6, 12, 18 mm</td><td>jigs, drawers, laser parts</td></tr>
+          <tr><td>⅛″ plywood</td><td>about 3 mm</td><td>laser parts, box bottoms</td></tr>
+          <tr><td>¼″, ½″, ¾″ MDF</td><td>as named</td><td>painted parts, jigs</td></tr>
+          <tr><td>⅛″ hardboard, ¼″ pegboard</td><td>⅛″, about 3⁄16″</td><td>backs, drawer bottoms, tool walls: brads and glue</td></tr>
+          <tr><td>7⁄16″, ¾″ OSB</td><td>7⁄16″, 23⁄32″</td><td>shop floors, sheds, rough shelves</td></tr>
+          <tr><td>¾″ melamine</td><td>¾″</td><td>closet shelves, cabinet boxes: screw it, don't glue its faces; band the edges</td></tr>
+          <tr><td>¾″ blockboard</td><td>¾″</td><td>long shelves and doors that stay flat</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small muted">Full sheets are 4 × 8 ft; stores also sell 4 × 4 and 2 × 4 ft project panels. Baltic birch often comes 5 × 5 ft. A dado for "¾″" plywood must be cut to its real thickness.</p>
+    </div>
+  </section>
+
+  <section class="two">
+    <div style="display:grid;gap:6px">
+      <h2>Hardwood at a lumberyard</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>Thickness</th><th>Rough</th><th>Planed (S2S)</th></tr></thead>
+        <tbody id="yard"></tbody>
+      </table></div>
+      <p class="small muted">Random widths and lengths, priced by the board foot. Home stores also sell hardwood planed to ¾″ in 1×4, 1×6 and so on, like pine.</p>
+    </div>
+    <div style="display:grid;gap:6px">
+      <h2>Board feet</h2>
+      <div class="box">
+        <p>One board foot is a piece 12″ × 12″ × 1″ (rough thickness).</p>
+        <p class="formula">thick (in) × wide (in) × long (in) ÷ 144</p>
+        <p>A 4/4 board 6″ wide and 8 ft long: 1 × 6 × 96 ÷ 144 = <b>4 board feet</b>.</p>
+        <p class="muted">Buy about 25% more than your parts add up to: random widths and planing waste some.</p>
+      </div>
+      <p class="note">Prices change by store and season: Arc's shopping list starts with typical ones, so type your store's over them. Arc never looks them up.</p>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="box">
+      <h3>Pilot holes for #8 screws</h3>
+      <p>Softwoods (pine, cedar) and poplar: <b>3⁄32″</b>. Hardwoods and plywood: <b>⅛″</b>. Clearance through the first board: <b>11⁄64″</b>. Very hard woods (<span id="hard"></span>): drill slower and always pre-drill.</p>
+    </div>
+    <div class="box">
+      <h3>Outdoors</h3>
+      <p><span id="out"></span> last outside; everything else needs paint or an exterior finish and will still wear. Use stainless or coated screws outdoors.</p>
+    </div>
+    <div class="box">
+      <h3>Stain</h3>
+      <p><span id="blotch"></span> go blotchy: use a pre-stain conditioner or a gel stain, and try it on an offcut first. Oak and walnut take stain evenly.</p>
+    </div>
+    <div class="box">
+      <h3>Dust</h3>
+      <p>Wear a dust mask for sanding, and for cutting <span id="dust"></span>: their dust can irritate eyes, skin and lungs.</p>
+    </div>
+  </section>
+
+  <p class="small muted">Hardness and weight are typical published values; real boards vary. Check anything that matters with your store or a wood teacher. The pictures are drawn by code: colour and figure change from board to board.</p>
+</div>
+<button type="button" id="back-to-arc" class="back-to-arc" aria-label="Back to Arc">&lsaquo; Back to Arc</button>
+<script type="module">
+  import { SPECIES, SPECIES_ORDER, STOCK, VERY_HARD, inch } from '../js/wood/lumber.js';
+  import { texture } from '../js/wood/look.js';
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const list = (ks) => { const n = ks.map((k) => SPECIES[k].name.toLowerCase()); return n.length > 1 ? `${n.slice(0, -1).join(', ')} and ${n[n.length - 1]}` : n[0]; };
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const cards = document.getElementById('cards');
+  // (The other sheets, hardboard to blockboard, are rows in the sheets table instead of cards.)
+  for (const k of SPECIES_ORDER.filter((x) => !['hardboard', 'osb', 'melamine', 'blockboard'].includes(x))) {
+    const s = SPECIES[k];
+    const tags = [s.outdoor ? '<span class="chip out">outdoors</span>' : '', s.blotch ? '<span class="chip">blotchy stain</span>' : '', s.dust ? '<span class="chip dust">dust mask</span>' : ''].join('');
+    cards.insertAdjacentHTML('beforeend', `<div class="card" data-wood="${k}"><canvas width="512" height="30" role="img" aria-label="${esc(s.name)} grain"></canvas><div class="b"><div class="t"><h3>${esc(s.name)}</h3><span class="nums">${s.janka ? `${k === 'birchply' ? '≈' : ''}${s.janka.toLocaleString('en-US')}` : '—'} · ${s.lbft3} lb</span></div>
+      <p><b>Best for:</b> ${esc(s.best)}</p><p class="no"><b>Avoid:</b> ${esc(s.avoid)}</p><p class="muted">${esc(s.notes)}</p>${tags ? `<div class="tags">${tags}</div>` : ''}</div></div>`);
+    // (Its grain, drawn the way Arc draws it, with a clear coat.)
+    const cv = cards.lastElementChild.querySelector('canvas');
+    const tex = texture(k, 'top', 1, { finish: 'clear' });
+    if (tex) cv.getContext('2d').drawImage(tex, 0, 40, 512, 30, 0, 0, 512, 30);
+  }
+  const USE = { '1x2': 'cleats, trim, frames', '1x3': 'face frames, slats', '1x4': 'aprons, rails, small shelves', '1x6': 'birdhouses, box sides, shelves', '1x8': 'bookshelf shelves', '1x10': 'deep shelves, bench seats', '1x12': 'bookcase sides, wide shelves', '2x2': 'table legs, frames', '2x4': 'workbenches, frames, studs', '2x6': 'bench tops, outdoor furniture', '4x4': 'posts, thick legs', '1/4x4': 'box bottoms, trays', '1/2x4': 'drawer and box sides' };
+  document.getElementById('boards').innerHTML = STOCK.filter((s) => USE[s.id]).map((s) => `<tr><td>${s.name}</td><td>${inch(s.t).replace('"', '″')} × ${inch(s.w).replace('"', '″')}</td><td>${USE[s.id]}</td></tr>`).join('');
+  document.getElementById('yard').innerHTML = STOCK.filter((s) => s.yard).map((s) => `<tr><td>${s.yard.q}/4${s.yard.q === 4 ? ' ("four quarter")' : ''}</td><td>${inch(s.yard.rough).replace('"', '″')}</td><td>about ${inch(s.t).replace('"', '″')}</td></tr>`).join('');
+  document.getElementById('hard').textContent = list(SPECIES_ORDER.filter((k) => (SPECIES[k].janka || 0) >= VERY_HARD));
+  document.getElementById('out').textContent = cap(list(SPECIES_ORDER.filter((k) => SPECIES[k].outdoor)));
+  document.getElementById('blotch').textContent = cap(list(SPECIES_ORDER.filter((k) => SPECIES[k].blotch && k !== 'plywood')));
+  document.getElementById('dust').textContent = list(SPECIES_ORDER.filter((k) => SPECIES[k].dust));
+  document.body.dataset.ready = '1';
+</script>
+<script>
+  if (window.parent !== window) document.getElementById('back-to-arc').hidden = true;
+  document.getElementById('back-to-arc').addEventListener('click', () => {
+    if (window.parent !== window) { window.parent.postMessage({ arc: 'close-help' }, '*'); return; }
+    if (window.opener) window.close();
+    setTimeout(() => { if (!window.closed) { if (history.length > 1) history.back(); else location.href = '../index.html'; } }, 200);
+  });
+</script>
+</body>
+</html>

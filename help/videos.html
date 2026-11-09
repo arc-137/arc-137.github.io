@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arc Video Lessons</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --paper: #ffffff; --ink: #24262b; --muted: #5d6169; --line: #dedbd3;
+    --accent: #5b3a8e; --accent-soft: #efe8f7; --code: #f0eee8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1d21; --paper: #24272c; --ink: #e8e6e1; --muted: #a7abb3; --line: #3a3e45;
+      --accent: #c4a8ef; --accent-soft: #2b2340; --code: #2e3137;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1d21; --paper: #24272c; --ink: #e8e6e1; --muted: #a7abb3; --line: #3a3e45;
+    --accent: #c4a8ef; --accent-soft: #2b2340; --code: #2e3137;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 80px; }
+  header { padding: 24px 0 8px; border-bottom: 2px solid var(--ink); margin-bottom: 24px; display: flex; gap: 16px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
+  header h1 { font-size: 2.2rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--muted); }
+  header nav a { margin-left: 14px; }
+  a { color: var(--accent); }
+  .player { display: none; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 28px; }
+  .player.on { display: block; }
+  .player video { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 8px; display: block; }
+  .player h2 { margin: 12px 0 2px; font-size: 1.3rem; }
+  .player p { margin: 0; color: var(--muted); }
+  .player .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .player .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .btn { font: inherit; font-size: .9rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; }
+  .btn:hover { border-color: var(--accent); }
+  .offline { display: none; margin-top: 10px; padding: 10px 14px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0; }
+  .offline.on { display: block; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; font: inherit; color: inherit; padding: 0; display: flex; flex-direction: column; }
+  .card:hover, .card:focus-visible { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  .card.now { border-color: var(--accent); }
+  .thumb { position: relative; aspect-ratio: 16 / 9; background: #2a2440; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb .len { position: absolute; right: 8px; bottom: 8px; background: rgba(0,0,0,.75); color: #fff; font-size: .8rem; font-weight: 600; padding: 1px 7px; border-radius: 5px; }
+  .thumb .play { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity .15s; }
+  .thumb .play span { width: 58px; height: 58px; border-radius: 50%; background: rgba(0,0,0,.6); display: grid; place-items: center; }
+  .thumb .play span::after { content: ""; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+  .card:hover .play { opacity: 1; }
+  .body { padding: 12px 14px 14px; }
+  .body .n { font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .body h3 { margin: 2px 0 4px; font-size: 1.08rem; }
+  .body p { margin: 0; font-size: .92rem; color: var(--muted); }
+  .empty { color: var(--muted); }
+  footer { margin-top: 36px; color: var(--muted); font-size: .9rem; }
+  @media (max-width: 640px) { header nav a { margin: 0 14px 0 0; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Video lessons</h1>
+    <p>Short videos that show Arc being used, start to finish. Watch them in order or jump to the one you need.</p>
+  </div>
+  <nav><a href="user-guide.html">User guide</a><a href="quick-reference.html">Quick reference card</a></nav>
+</header>
+
+<section class="player" id="player" aria-live="polite">
+  <video id="video" controls playsinline preload="metadata"></video>
+  <div class="row">
+    <div>
+      <h2 id="ptitle"></h2>
+      <p id="pblurb"></p>
+    </div>
+  </div>
+  <div class="btns">
+    <a class="btn" id="pguide" href="user-guide.html">Read about this in the guide</a>
+    <button class="btn" id="pnext" type="button">Next lesson ›</button>
+    <button class="btn" id="ppip" type="button" title="A floating window that stays on top of your other windows, so you can follow along while you draw">Pop out ⧉</button>
+  </div>
+  <div class="offline" id="offline">This video couldn't load. The videos stream from the Arc website, so you need an internet connection to watch them.</div>
+</section>
+
+<div class="grid" id="grid"></div>
+<p class="empty" id="empty" hidden>No videos yet.</p>
+
+<footer>The videos have no sound: captions on screen explain each step, and keys show as they're pressed. Use the player's full-screen button to see them bigger.</footer>
+</div>
+
+<script src="videos/list.js"></script>
+<script>
+  // The videos live beside this page on the website. The desktop app doesn't install them, so it
+  // falls back to the website copy when the local file isn't there.
+  const WEB = 'https://arc-137.github.io/help/videos/';
+  const list = window.ARC_VIDEOS || [];
+  const grid = document.getElementById('grid');
+  const video = document.getElementById('video');
+  const player = document.getElementById('player');
+  const offline = document.getElementById('offline');
+  const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+  let current = -1;
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function play(i, auto = true) {
+    const v = list[i];
+    if (!v) return;
+    current = i;
+    offline.classList.remove('on');
+    video.replaceChildren();
+    for (const src of [`videos/${v.id}.mp4`, `${WEB}${v.id}.mp4`]) {
+      const s = document.createElement('source');
+      s.src = src;
+      s.type = 'video/mp4';
+      video.append(s);
+    }
+    // The last source failing means neither copy could load.
+    video.lastChild.addEventListener('error', () => offline.classList.add('on'));
+    video.poster = `videos/${v.id}.jpg`;
+    video.load();
+    document.getElementById('ptitle').textContent = `${i + 1}. ${v.title}`;
+    document.getElementById('pblurb').textContent = v.blurb;
+    const guide = document.getElementById('pguide');
+    guide.href = `user-guide.html${v.topic ? `#${v.topic}` : ''}`;
+    guide.hidden = !v.topic;
+    document.getElementById('pnext').hidden = i >= list.length - 1;
+    player.classList.add('on');
+    document.querySelectorAll('.card').forEach((c, k) => c.classList.toggle('now', k === i));
+    history.replaceState(null, '', `#${v.id}`);
+    player.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (auto) video.play().catch(() => {});
+  }
+
+  list.forEach((v, i) => {
+    const card = el('button', 'card');
+    card.type = 'button';
+    const thumb = el('div', 'thumb');
+    const img = el('img');
+    img.src = `videos/${v.id}.jpg`;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.onerror = () => { img.onerror = null; img.src = `${WEB}${v.id}.jpg`; };
+    const ov = el('div', 'play');
+    ov.append(el('span'));
+    thumb.append(img, el('span', 'len', mmss(v.seconds)), ov);
+    const body = el('div', 'body');
+    body.append(el('div', 'n', `Lesson ${i + 1}`), el('h3', '', v.title), el('p', '', v.blurb));
+    card.append(thumb, body);
+    card.addEventListener('click', () => play(i));
+    grid.append(card);
+  });
+  document.getElementById('empty').hidden = list.length > 0;
+  document.getElementById('pnext').addEventListener('click', () => play(current + 1));
+  video.addEventListener('ended', () => { if (current < list.length - 1) document.getElementById('pnext').focus(); });
+
+  // Pop out: the browser's floating picture-in-picture window.
+  const pip = document.getElementById('ppip');
+  if (!document.pictureInPictureEnabled) pip.hidden = true;
+  pip.addEventListener('click', async () => {
+    try {
+      if (document.pictureInPictureElement) await document.exitPictureInPicture();
+      else { if (video.paused) await video.play().catch(() => {}); await video.requestPictureInPicture(); }
+    } catch { pip.hidden = true; }
+  });
+
+  // Open straight to a lesson: videos.html#05-finishes, or #05-finishes@42 to start 42 s in and play.
+  const [hashId, hashAt] = decodeURIComponent(location.hash.slice(1)).split('@');
+  const start = list.findIndex((v) => v.id === hashId);
+  if (start >= 0) {
+    play(start, !!hashAt);
+    if (hashAt) video.addEventListener('loadedmetadata', () => { video.currentTime = Number(hashAt) || 0; }, { once: true });
+  }
+</script>
+<button type="button" id="back-to-arc" class="back-to-arc" aria-label="Back to Arc">&lsaquo; Back to Arc</button>
+<style>
+  .back-to-arc { position: fixed; z-index: 50; bottom: max(16px, env(safe-area-inset-bottom, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); padding: 8px 14px; border: 0; border-radius: 999px; background: #2e1c47; color: #fff; font: 600 14px/1 system-ui, -apple-system, "Segoe UI", sans-serif; box-shadow: 0 4px 14px rgba(46, 28, 71, .3); border-left: 4px solid #2ec4b6; cursor: pointer; }
+  .back-to-arc:hover { background: #4b2f73; }
+  .back-to-arc:focus-visible { outline: 2px solid #2ec4b6; outline-offset: 2px; }
+  @media print { .back-to-arc { display: none !important; } }
+</style>
+<script>
+  // Inside Arc's help viewer: ask Arc to close it (the viewer's bar has the same button, so this one hides).
+  // In its own window: close the window. Otherwise go back.
+  if (window.parent !== window) document.getElementById('back-to-arc').hidden = true;
+  document.getElementById('back-to-arc').addEventListener('click', () => {
+    if (window.parent !== window) { window.parent.postMessage({ arc: 'close-help' }, '*'); return; }
+    if (window.opener) window.close();
+    setTimeout(() => { if (!window.closed) { if (history.length > 1) history.back(); else location.href = '../index.html'; } }, 200);
+  });
+</script><script src="res.js"></script></body>
+</html>
