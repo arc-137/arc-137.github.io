@@ -1,0 +1,121 @@
+/* The grouped tool bar (toolgroups.js): a heading on the left bar opens a picker of its parts.
+   (Kept apart from app.css. The picker's buttons are the real tool buttons, so .tools rules reach them;
+   the ones below lay them out as rows.) */
+
+/* A heading: the width of the bar, its picture, its name, the part in use under it, and an arrow. */
+.tools .tg { grid-column: 1 / -1; min-width: 0; }
+.tools .tg.tg-off, .tools .tg-list > .tg-gone { display: none; }
+.tools .tg-btn {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 7px;
+  grid-template-rows: auto auto;
+  align-items: center;
+  align-content: center;
+  column-gap: 6px;
+  width: 100%;
+  min-height: 36px;
+  padding: 5px 5px 5px 7px;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--lilac-soft);
+}
+.tools .tg-btn svg { grid-row: 1 / 3; width: 20px; height: 20px; }
+.tools .tg-btn > span { grid-column: 2; font-weight: 600; white-space: normal; line-height: 1.15; text-overflow: clip; }
+.tools .tg-btn .tg-cur { grid-column: 2; font-size: 10px; line-height: 1.2; color: var(--violet); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools .tg-btn .tg-cur:empty { display: none; }
+.tools .tg-btn .tg-arrow { grid-column: 3; grid-row: 1 / 3; width: 0; height: 0; border-left: 5px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent; opacity: .5; }
+.tools .tg-btn.opened:not(.active) { border-color: #b9a2dc; background: #ebe2f6; }
+.tools .tg-btn.active .tg-cur { color: var(--mint); }
+body.edition-hobby .tools .tg-btn { background: #c8ebe6; border-color: #a9dcd5; }
+body.edition-hobby .tools .tg-btn.active .tg-cur { color: var(--plum); }
+body.edition-land .tools .tg-btn { background: #d3ecd0; border-color: #b6dcb1; }
+
+/* A grouped bar is a little tighter, so a house's bar fits a laptop screen without scrolling. */
+body.tool-groups { --tools-w: 124px; }
+body.tool-groups .tools { gap: 2px; padding-top: 5px; }
+body.tool-groups .tools > button { padding: 5px 1px 3px; }
+body.tool-groups .tools .tg-btn { min-height: 32px; padding: 3px 4px 3px 6px; column-gap: 5px; }
+body.tool-groups .tools .tg-btn > span { line-height: 1.08; }
+body.tool-groups .tools .sep { margin: 3px 4px; }
+
+/* The picker: beside the bar, level with its heading. */
+.tg-pop {
+  display: none;
+  position: fixed;
+  z-index: 46;
+  flex-direction: column;
+  width: 300px;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
+  padding: 4px 6px 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+  color: var(--text);
+}
+.tg-pop.open { display: flex; }
+.tg-head { display: flex; align-items: center; gap: 2px; margin-bottom: 4px; padding: 2px 0 5px 6px; border-bottom: 1px solid var(--line); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.tg-head b { flex: 1; }
+.tools .tg-head button { flex-direction: row; justify-content: center; width: 30px; height: 30px; padding: 0; font-size: 19px; line-height: 1; color: var(--muted); }
+.tools .tg-head button svg { width: 17px; height: 17px; }
+.tools .tg-head .tg-pin.on { background: var(--accent-soft); border-color: #cdb9ea; color: var(--plum); }
+.tg-pop.pinned .tg-head { cursor: move; }
+.tg-pop.pinned { box-shadow: 0 12px 34px rgba(0, 0, 0, .24); border-color: #cdb9ea; }
+.tg-list { display: flex; flex-direction: column; gap: 2px; }
+
+/* A part: its picture, its name with what it's for under it, and its key. */
+.tools .tg-list > button {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 10px;
+  min-height: 40px;
+  padding: 5px 8px;
+  text-align: left;
+  font-size: 13px;
+}
+.tools .tg-list > button svg { grid-row: 1 / 3; width: 24px; height: 24px; }
+.tools .tg-list > button > span:not(.lock-badge) { grid-column: 2; grid-row: 1; font-weight: 600; white-space: normal; }
+.tools .tg-list > button::after { content: attr(data-why); grid-column: 2; grid-row: 2; font-size: 11.5px; line-height: 1.25; color: var(--muted); }
+.tools .tg-list > button:not([data-why])::after { content: none; }
+.tools .tg-list > button.active::after { color: var(--lilac); }
+.tools .tg-list > button kbd { position: static; grid-column: 3; grid-row: 1 / 3; padding: 0 5px; border: 1px solid var(--line); border-radius: 4px; font-size: 11px; }
+.tools .tg-list > button.active kbd { border-color: rgba(255, 255, 255, .3); }
+.tools .tg-list > button kbd:empty { display: none; }
+.tools .tg-list > button:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+
+/* On an iPad or a phone: a sheet from the bottom with finger-sized rows. */
+.tg-pop.sheet { left: 0; right: 0; top: auto; bottom: 0; width: auto; max-height: 62vh; padding: 6px 10px calc(10px + env(safe-area-inset-bottom, 0px)); border-radius: 16px 16px 0 0; z-index: 60; box-shadow: 0 -8px 30px rgba(0, 0, 0, .22); }
+.tg-pop.sheet .tg-head { font-size: 13px; }
+.tools .tg-pop.sheet .tg-head button { width: 44px; height: 44px; }
+.tools .tg-pop.sheet .tg-list > button { min-height: 44px; font-size: 15px; }
+.tools .tg-pop.sheet .tg-list > button::after { font-size: 13px; }
+@media (min-width: 640px) { .tg-pop.sheet .tg-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; } }
+body.touch .tools .tg-btn { min-height: 44px; }
+/* (A little wider on a tablet, so a heading like Structures fits beside its picture and the scroll bar.) */
+body.touch.tool-groups { --tools-w: 134px; }
+
+/* Bigger text: the tool bar's names grow, and the picker zooms like the menus do. */
+body.big-text { --tools-w: 140px; }
+body.touch.big-text.tool-groups { --tools-w: 150px; }
+.big-text .tools button { font-size: 12.5px; }
+.big-text .tools button svg { width: 26px; height: 26px; }
+.big-text .tools kbd { font-size: 10.5px; }
+.big-text .tools .tg-btn { font-size: 13px; grid-template-columns: 22px minmax(0, 1fr) 7px; }
+.big-text .tools .tg-btn svg { width: 22px; height: 22px; }
+.big-text .tools .tg-btn .tg-cur { font-size: 11.5px; }
+.big-text .tools .tg-list > button { font-size: 13px; }
+.big-text .tg-pop { zoom: 1.12; }
+
+/* ArcRes: a small lock after a heading whose tools all wait for the first lesson (toollock.js). */
+.tools .tg-btn.tg-locked > span::after { content: ''; display: inline-block; width: 9px; height: 10px; margin-left: 4px; vertical-align: -1px; opacity: .6; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='11' width='14' height='10' rx='2' fill='%236c6578'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3' fill='none' stroke='%236c6578' stroke-width='2.4'/%3E%3C/svg%3E") center / contain no-repeat; }
+.tools .tg-list > .tg-act.locked::before { content: ''; position: absolute; left: 3px; top: 3px; width: 10px; height: 10px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='11' width='14' height='10' rx='2' fill='%236c6578'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3' fill='none' stroke='%236c6578' stroke-width='2.4'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+/* The Blocks library's shelves (blockshelves.js, panel.js): a row of headings over the categories. */
+.lib-shelves { display: flex; flex-wrap: wrap; gap: 4px; margin: 2px 0 8px; }
+.lib-shelf { padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text); font: inherit; font-size: 12px; cursor: pointer; }
+.lib-shelf:hover { background: var(--lilac-soft); }
+.lib-shelf.on { background: var(--plum); border-color: var(--plum); color: #fff; }
+body.touch .lib-shelf { min-height: 44px; padding: 6px 12px; font-size: 14px; }

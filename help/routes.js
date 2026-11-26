@@ -1,0 +1,140 @@
+// Where help links go: one table for the whole program (build-out H3). The "?" on a panel heading
+// (PANEL_TOPICS), the guide topics command search offers (GUIDE_TOPICS, and EDITION_TOPICS for the editions
+// with their own chapters), and the parts of the guide ArcRes leaves out (RES_HIDDEN_SECTIONS, which the
+// ArcRes guide hides, src/help/res.js; RES_HIDDEN_TOPICS also keeps them out of its search).
+// It's read by src/js/help.js in the program and by res.js in the guide page.
+
+// Panel section titles (some carry counts or names) and the guide topic that explains them.
+export const PANEL_TOPICS = [
+  [/^(Wall|Wall settings|Walls for this room|Curved wall|\d+ walls)$/, 'tool-wall'],
+  [/^(Room|\d+ rooms|Floor material)$/, 'tool-room'],
+  [/^(Door|Window|\d+ doors and windows)$/, 'tool-door'],
+  [/^Several at once$/, 'tool-spacing'],
+  [/^Stair parts$/, 'stair-parts'],
+  [/^(Stairs|Spiral stair|Steps|Steps, flight|Flight|Landing|Code limits|\d+ stairs)/, 'tool-stairs'],
+  [/^Floors & baseboards$/, 'tool-floors'],
+  [/^(Outdoor|Fence|Property line|Plot plan image|Set plot plan scale)$/, 'tool-outdoor'],
+  [/^Aerial photo$/, 'aerial'],
+  [/^(Buried line|\d+ buried lines)/, 'buried-lines'],
+  [/^(Privacy and views|Line of sight)/, 'privacy'],
+  [/^Yard phase/, 'yard-phases'],
+  [/^Rock$/, 'tool-rock'],
+  [/^(Ducts, pipes & wires|Run totals|\d+ runs)$/, 'tool-mep'],
+  [/^(Roof|Roof framing|\d+ roofs)$/, 'tool-roof'],
+  [/^(Porch|Porch or covered deck)$/, 'tool-porch'],
+  [/^(Paint & materials|Material|Stamp on)/, 'tool-paint'],
+  [/^(Decorate|Make a palette)$/, 'decorate'],
+  [/^Furnish & share$/, 'furnish'],
+  [/^(Blocks library|Placing:|Cabinet style|Product|\d+ blocks)/, 'tool-blocks'],
+  [/^(Rotate|Mirror)$/, 'tool-edit'],
+  [/^(Terrace or balcony|Floor opening|Trellis or pergola|Chimney)$/, 'tool-parts'],
+  [/^(3D shape|\d+ 3D shapes)/, 'tool-shape'],
+  [/^3D printing$/, 'print-object'],
+  [/^Model base$/, 'print-ground'],
+  [/^(Flat pad|Driveway or path)$/, 'tool-outdoor'], // (a model's pads lead on to model ground from the Model base panel)
+  [/^(Text|Hatch|Dimension|Line|Closed shape|Circle|Arc|Ellipse|Curve|Drafting|\d+ shapes|\d+ text items)$/, 'drafting'],
+  [/^(Section cut|Detail callout|Section |Detail |Sections)/, 'sheets'],
+  [/^Project$/, 'settings'],
+  [/^Design check/, 'design-check'],
+  [/^Level$/, 'levels'],
+  [/^Layer/, 'layers'],
+  [/^Getting started$/, 'shortcuts'],
+  [/^Nothing selected$/, 'screen'],
+  [/^Review the converted plan$/, 'convert'],
+  [/^(Column grid|Spiral ramp)$/, 'commercial'],
+  [/^(Markups & questions|Markup|RFI \d+)$/, 'markups'],
+  [/^(Count & measure|The PDF)$/, 'pdf-takeoff'],
+  [/^Pre-existing/, 'pre-existing'],
+  [/^(Gear|Turned shape|Rope or rail)$/, 'turned-swept-gear'],
+  [/^My printed parts$/, 'my-parts'],
+  [/^For someone else to print$/, 'client-kit'],
+];
+
+// Guide topics offered by command search.
+export const GUIDE_TOPICS = [
+  ['The main screen', 'screen'], ['Welcome screen', 'welcome'], ['About & licence (who this copy is licensed to)', 'about'], ['Search for any command', 'search'],
+  ['Preferences and Project settings', 'settings'], ['Project specs & guidelines (your own rules)', 'specs'], ['Notes on warnings', 'specs'], ['Building codes for houses and commercial plans', 'house-commercial'], ['Houses and commercial projects', 'house-commercial'],
+  ['Walls', 'tool-wall'], ['Rooms', 'tool-room'], ['Dividing line between open rooms (where a room stops)', 'dividing-line'], ['Room names that overlap move apart', 'dividing-line'], ['Make this a feature wall (ready-made looks by style)', 'feature-wall-pick'], ['Exhaust duct out through a basement wall (End rises to)', 'exhaust-riser'], ['Bring in one drawing from a CAD sheet (DXF)', 'convert-checklist'], ['Doors and windows', 'tool-door'], ['Space doors or windows evenly along a wall', 'tool-spacing'], ['Stairs', 'tool-stairs'], ['Stair parts: balusters, glass, cable, newels, open risers, stringers', 'stair-parts'],
+  ['Floors and baseboards', 'tool-floors'], ['Outdoor: patios, decks, fences, property lines', 'tool-outdoor'], ['Deck framing and the deck permit drawing', 'deck-framing'], ['Watch the house break: snow on the roof', 'house-break'], ['Canadian Electrical Code (service by Rule 8-200)', 'electrical-cec'], ['National Plumbing Code (hydraulic loads)', 'plumbing-npc'], ['How old the prices are (re-price rows)', 'price-dates'],
+  ['Rock: walls, ledges and cliffs in real rock', 'tool-rock'], ['Walls, fences and hedges that join where they meet (corners, shared posts)', 'site-joins'], ['Stone finishes with real stones (stacked shale, stone veneer)', 'tool-rock'], ['Rock test tile to print', 'tool-rock'], ['Stone facing: carved stone along the side of a model base (skirting, cut stone blocks, storybook wall)', 'tool-facing'], ['Arches, keystones, lanterns and columns in a stone facing', 'tool-facing'], ['Snow cap and drifts on a stone facing', 'tool-facing'], ['Printing a stone facing face up, in pieces, in colours', 'tool-facing'], ['Lit arches: an LED strip groove behind a stone facing', 'tool-facing'],
+  ['Sculpt the ground in 3D (raise, lower, smooth, flatten, terrace)', 'sculpt-3d'], ['Draw a road on the 3D ground', 'sculpt-3d'],
+  ['Fine snow and stone: wind ripples, drifts, tree wells, plow banks, benches', 'fine-snow'], ['Matte white on the drifts (a second colour change)', 'fine-snow'], ['Relief preview of a printed plate', 'fine-snow'], ['Rock ledges with snow', 'fine-snow'], ['Deep snow: round mounds all over a model base', 'fine-snow'], ['Bring in a sculpted surface (from Blender) for the print plates', 'sculpted-surface'],
+  ['Ducts, pipes and wires (MEP)', 'tool-mep'], ['Roofs', 'tool-roof'], ['Porches and covered decks', 'tool-porch'],
+  ['Paint and materials', 'tool-paint'], ['Decorate: colour palettes for rooms', 'decorate'], ['Interiors workspace', 'interiors'], ['Style packs', 'styles'], ['Decor library: curtains, lamps, art, plants', 'decor'], ['Design this room for me (furniture layouts)', 'furnish'], ['Shopping list & budget', 'shopping'], ['Mood board', 'moodboard'], ['Blocks library: furniture, cabinets, fixtures', 'tool-blocks'], ['Home gym and 3D printing blocks', 'gym-hobby'], ['Finish a basement: office with a 3D printer, home gym', 'basement-finish'], ['Vaulted ceilings and sunken rooms', 'vaulted'], ['What style packs do inside: floors, fixtures, tile', 'styles-inside'], ['Renders inside rooms', 'render-indoor'],
+  ['Move, Duplicate, Rotate, Mirror', 'tool-edit'], ['Terraces, floor openings, trellises, chimneys', 'tool-parts'],
+  ['3D shapes (push/pull)', 'tool-shape'], ['Type a distance while pushing or pulling', 'type-distance'], ['Section cut in 3D', 'section-cut'], ['Turn a shape any way in 3D', 'turn-3d'], ['Round or chamfer chosen edges', 'chosen-edges'], ['Draw on a face, then push it', 'draw-on-face'], ['The solid engine (Manifold)', 'solid-engine'], ['Snapping in 3D', 'snap-3d'], ['Keys in 3D', 'keys-3d'], ['Guides and the tape in 3D', 'guides-3d'], ['Prints, Holds, Cost chips', 'live-chips'], ['Linked copies of 3D shapes', 'linked-copies'], ['Follow Me (crown, baseboard, handrails)', 'follow-me'], ['Dimensions that move walls', 'dims-drive'], ['History you can scrub', 'history-scrub'], ['3D tips', 'tips-3d'], ['Make a kit', 'make-kit'], ['Turned shapes, ropes and rails, gears', 'turned-swept-gear'], ['My printed parts (a library on this device)', 'my-parts'], ['Client print kit (a folder for someone else to print)', 'client-kit'], ['Plates built in the background, with Cancel', 'plates-background'], ['One file per insert', 'insert-files'], ['Lines, text, hatch and dimensions', 'drafting'], ['Typing points, snaps and guide lines', 'typed-points'], ['Change any key (the key map)', 'key-map'], ['Levels (floors)', 'levels'], ['Buildings: several on one site (an acreage)', 'buildings'],
+  ['Layers', 'layers'], ['Design check', 'design-check'], ['Convert a drawing to walls', 'convert'],
+  ['The menus', 'menus'], ['Looking at the model in 3D', 'views'], ['Camera controls in 3D', 'camera'],
+  ['Measuring tape', 'measure'], ['Drawing ducts, pipes and wires in 3D', 'mep3d'], ['Suggested room and MEP layouts', 'suggest'],
+  ['Copy and paste between plans', 'copy-paste'], ['Drawing sheets and PDFs', 'sheets'], ['Building code summary', 'codes'], ['Schedules: doors, windows, rooms, walls, fixtures', 'schedules'], ['Your own fields on plan items', 'own-fields'], ['Wall types made of layers (R-values)', 'wall-types'], ['Windows and doors as products (U-value, price)', 'opening-products'], ['Energy worksheet (NBC 9.36)', 'energy-936'], ['Heat loss, room by room', 'heat-loss'], ['Energy performance and tiers', 'energy-performance'], ['Can I take this wall out? (load path)', 'wall-out'],
+  ['Commercial drawings and checks', 'commercial'], ['Hands-on lessons (a small house)', 'lessons'], ['The Lesson house sample', 'lessons'], ['Making a tour video', 'video'],
+  ['Learning while you draw: Guide menu', 'guide-menu'], ['Takeoff on a PDF (count and measure)', 'pdf-takeoff'], ['Price books', 'price-books'], ['Quote for the client', 'quote'], ['Change orders', 'change-orders'], ['Pre-existing work: renovations, feature walls, demolition', 'pre-existing'], ['Existing and Removal reference layers', 'pre-existing'], ['Electrical: circuits, panel schedule, service size', 'electrical'], ['Assemblies, waste and cut lists', 'cut-lists'], ['Permit-set check and review set', 'permit'], ['Phase schedule / project timeline', 'schedule'], ['Plumbing: fixtures, pipe sizes, water heater', 'plumbing'], ['Heating and cooling: loads, furnace, AC, heat pump, ducts', 'heatcool'], ['Framing: headers, joists, hardware, nailing schedule', 'framepack'], ['Photo mode renders and evening lighting', 'render'], ['Photo eraser: take something out of a photo', 'photo-eraser'], ['Present to a client (full screen, slides)', 'present'], ['Model maker workspace (printed models, dioramas)', 'model-maker'], ['A budget for each design option', 'option-budgets'], ['New lot: size, setbacks and the houses that fit', 'new-lot'], ['An Edmonton lot from its address (zoning, buildings)', 'new-lot'], ['Pie and irregular lots: lot shapes and typed sides', 'new-lot'], ['No Real Property Report? Finding your lot\'s survey', 'new-lot'], ['Bi-level and narrow infill templates', 'bilevel-infill'], ['Share page on a phone, and private links', 'share'], ['Add items that aren\'t in the drawing to the takeoff', 'takeoff-extras'], ['Selections & allowances', 'selections'], ['Markups & RFIs (questions for the builder)', 'markups'],
+  ['Send to my contractor (one PDF)', 'pack'], ['Before & after', 'before-after'], ['Share page (3D model to email or upload)', 'share'], ['Start from a single room', 'room-templates'],
+  ['3D Print workspace (printer, plates, surfaces, inserts, parts, check)', 'print-workspace'], ['Print it for me (one button: turn, split, plates, filaments, checklist)', 'print-for-me'], ['The filaments in my H2D, and Open in Bambu Studio', 'h2d-filaments'], ['Printing imported models (STL, 3MF, GLB)', 'print-imported'], ['Warning colours on the model (overhangs, thin walls)', 'print-warnings'], ['Mesh doctor (open edges, watertight)', 'print-warnings'], ['Do these parts collide? (interference check)', 'print-warnings'], ['Vase mode and drain holes', 'vase-drain'], ['Printed inserts (a pad that drops into a pocket, with snow)', 'print-inserts'], ['Paths as inserts (a ski run in another colour, pegged in)', 'path-inserts'], ['Lettering on a 3D shape (raised or cut, fonts)', 'lettering'], ['Draw on the sides of a model base (snow drifts, snowflakes)', 'draw-sides'], ['Plates changed since their files were saved', 'print-changed'], ['Bambu Studio project (.3mf)', 'bambu-project'], ['How each part prints: orientation and supports', 'part-settings'], ['Parts list and part numbers (3D printing)', 'print-workspace'],
+  ['3D printing a house (floors that peg together)', 'print-house'], ['3D printing an object in millimetres', 'print-object'], ['Joining printed pieces: split a shape, magnets, pins, inserts, dovetails', 'print-connectors'], ['Model ground: dioramas, site models, printed landscapes', 'print-ground'], ['Lesson: 3D printing', 'lesson-print'], ['Taking a drawing to AutoCAD (DXF, DWG)', 'to-autocad'], ['Taking a model to SketchUp (COLLADA)', 'to-sketchup'], ['Handing the model to an engineer or energy advisor (IFC)', 'to-ifc'],
+  ['Lesson: build the Lakeside House with me', 'lesson-lakehouse'], ['ArcRes, the home edition', 'arcres'], ['Outdoor living: loungers, fire pit, hot tub', 'decor'],
+  ['Lock part of the drawing (move the rest around it)', 'lock'], ['Groups (Ctrl+G)', 'groups'], ['Components (linked blocks)', 'components'], ['The quick bar over a selection', 'quick-bar'], ['Design options A, B, C (compare versions)', 'design-options'],
+  ['Exterior looks (farmhouse, colonial, craftsman…)', 'exterior-looks'], ['Cost room by room', 'room-cost'], ['Where each price comes from', 'price-sources'],
+  ['Options & upgrades a homeowner can choose', 'upgrades'], ['Your cost and margin on a quote', 'margin'], ['Optional extras (mark anything optional)', 'upgrades'],
+  ['Client inspiration pictures (ideas from the client)', 'inspiration'],
+  ['Templates: house plans by size, duplexes, garages', 'templates'], ['Building pocket and lot width', 'templates'], ['Style starter houses', 'templates'], ['Commercial shells by size', 'templates'], ['Save a plan as a template in a folder', 'templates'],
+  ['Tile: backsplash, shower, bathroom and floor tile', 'tile'], ['Change a quantity in the estimate (extra box, grout)', 'takeoff-qty'], ['Purchases & invoices for the job', 'purchases'],
+  ['Client brief, priorities and survey (only you)', 'brief'], ['Designer tips: where the money shows', 'designer-tips'],
+  ['Staging decor: vases, frames, countertop appliances', 'staging'], ['Seasonal decor: Christmas tree, Halloween, Thanksgiving', 'staging'], ['Blocks library groups and most-used pieces', 'library-groups'], ['Stage rooms for showing (by room, with a season)', 'stage-rooms'], ['Hide staging in renders and the share page', 'stage-rooms'], ['3D: show one floor (main floor only, basement only)', 'floors-3d'], ['3D: back outside when the camera is stuck', 'floors-3d'],
+  ['Framing tool: posts, beams, studs and joists', 'tool-member'], ['Draw a beam or a post', 'tool-member'],
+  ['Print this floor plan', 'print-plan'], ['Backup copies of your plans', 'backups'], ['Paint every wall in a room, floor or house', 'tool-paint'],
+  ['Keyboard shortcuts', 'shortcuts'], ['Your own photos as materials', 'photos'], ['Samples', 'samples'], ['Good to know', 'limits'],
+  ['Scan vs tape measurements, and a to-confirm checklist', 'measuring-existing'], ['Dumpsters and disposal for tear-out', 'measuring-existing'],
+  ['Add a room or addition onto a house (walls match the siding)', 'wall-addition'], ['Walls that can\'t be moved (shared, structural, plumbing)', 'wall-fixed'],
+  ['Smooth curved paths, driveways and garden beds', 'smooth-curve'], ['Popcorn, knockdown and orange-peel ceilings; ceiling steps', 'ceiling-steps'], ['Tray ceiling, LED cove lighting', 'ceiling-kinds'], ['Coffered ceiling: size, beams, panels', 'ceiling-kinds'], ['Exposed ceiling beams and timber trusses', 'ceiling-kinds'], ['Cathedral, shed, barrel and groin vaulted ceilings', 'ceiling-kinds'], ['Skip trowel, stipple, swirl ceiling texture; scrape off popcorn', 'ceiling-steps'],
+  ['Transition strips where two floors meet', 'floor-transitions'], ['Versailles and hopscotch tile, any tile colour', 'tile-patterns'],
+  ['Basketweave, double herringbone, arabesque tile and a border round a tile floor', 'tile-layouts'],
+  ['Vertical and horizontal blinds', 'decor'], ['Mirror closet doors and 4-panel doors', 'door-designs'],
+  ['Vanity sink position, framed shower doors, oak and cherry grain', 'bath-kitchen-choices'], ['QR code for a share link', 'share'],
+  ['Use a clean bit of a photo as a material; even out its light', 'photo-crop'], ['Countertop patterns (granite, laminate, a photo) and edges (bullnose, ogee)', 'counter-edges'],
+  ['Photo pins: where a site photo was taken; line the 3D view up with it', 'photo-pins'], ['Aging-in-place check: grab bars, curbless shower, levers, night light', 'aging-in-place'],
+  ['Door handles: knob or lever', 'aging-in-place'], ['Compare a contractor\'s quote with the estimate, room by room', 'quote-compare'],
+  ['Lighting study: today vs new, foot-candles per room', 'lighting-study'], ['Light output (lumens) of a light fitting', 'lighting-study'],
+  ['Photo render of just one room; low memory for built-in graphics', 'render-one-room'],
+  ['Tape measurements on a scanned plan; fit the walls to the tape', 'tape-fit'], ['Room scan a few inches off: fix it with tape measurements', 'tape-fit'],
+  ['Try a new finish on a photo: paint, floor, cabinets (recolour)', 'recolor-photo'], ['Lay a floor or tile in perspective on a photo', 'recolor-photo'],
+];
+
+// Arc Hobby's and Arc Engineering's guide topics for command search: their own chapters (guide-hobby.js, guide-eng.js).
+export const EDITION_TOPICS = {
+  hobby: [
+    ['The main screen', 'screen'], ['The panel', 'the-panel'], ['The tool bar', 'tool-bar'], ['The menus', 'menus'], ['The 3D view', 'view3d'], ['Inches or millimetres, and your level', 'units'],
+    ['Search for any command', 'search'], ['Learning while you draw', 'guide-menu'], ['Preferences and Project settings', 'settings'], ['Layers', 'layers'], ['Work on just this part', 'focus'],
+    ['Your first project', 'first-project'], ['Make: the pieces', 'tools'], ['Board: lumber and plywood', 'tool-board'], ['Holes and cut-outs', 'tool-holes'], ['Turned parts', 'tool-turned'], ['Carve or engrave', 'tool-carve'],
+    ['Whole pieces: box, drawer, frame, cabinet', 'tool-makers'], ['Molding', 'tool-molding'], ['The Parts drawer', 'parts-drawer'],
+    ['Join: fasteners and joints', 'join'], ['Fasten: screws, nails, bolts, dowels, glue', 'tool-fasten'], ['Joint: cut joints', 'tool-joint'], ['Hardware: hinges, slides, brackets, pulls', 'tool-hardware'],
+    ['Finish: wood, edges, sanding, oil or paint', 'finish'], ['Paint a part', 'tool-paint'],
+    ['Shop: from the drawing to the bench', 'shop'], ['Cut list and layout', 'cut-list'], ['Tools you\'ll need', 'tools-needed'], ['Shopping list', 'shopping-list'], ['Will it tip over?', 'tip-over'], ['Will it hold?', 'wood-hold'], ['Step through the build', 'step-through'], ['Ready to build?', 'ready'], ['Build guide and project report', 'build-guide'], ['The metal shop: steel and welding', 'metal-shop'],
+    ['The Laser workspace', 'laser-workspace'], ['Laser: find the kerf, the fit test', 'laser-fit-test'], ['A laser-cut box', 'laser-box'], ['Laser: a living hinge or an engraved photo', 'laser-board'],
+    ['3D printing', 'printing'], ['3D printing an object', 'print-object'], ['Joining printed pieces', 'print-connectors'], ['The 3D Print workspace', 'print-workspace'], ['Print it for me', 'print-for-me'], ['The filaments in your H2D', 'h2d-filaments'], ['Mesh doctor and collisions', 'print-warnings'], ['Vase mode and drain holes', 'vase-drain'], ['Printed inserts', 'print-inserts'], ['Rock: walls, ledges and cliffs', 'tool-rock'], ['Stone facing: a carved stone face (skirting, cut stone blocks)', 'tool-facing'],
+    ['Mini golf', 'golf'], ['Mini golf: a hole', 'mg-hole'], ['Mini golf: slopes, mounds and hollows', 'mg-shape'], ['Mini golf: curved holes', 'mg-curves'], ['Mini golf: two levels, drop holes and roll-offs', 'mg-levels'], ['Mini golf: Surprise me, putt lines and the difficulty badge', 'mg-surprise'], ['Mini golf: the bot\'s shot, hole ideas, challenges and dressing the course', 'mg-help'], ['Mini golf: cameras, Horse, weather, chip shots and the physics panel', 'mg-ways'], ['Mini golf: print the scorecard and the course, build it in the yard, walk it in 3D', 'mg-print-course'], ['Mini golf: one-button play, a game controller and the commentator', 'mg-everyone'], ['Mini golf: scenes, scenery and your own picture', 'mg-scenery'], ['Mini golf: pipes, loops, gates and stickers', 'mg-tricks'], ['Mini golf: built-in courses, sharing a course and the best rounds', 'mg-share'], ['Mini golf: obstacles', 'mg-obstacles'], ['Mini golf: sand, water and bridges', 'mg-traps'], ['Mini golf: design your own obstacle', 'mg-design'], ['Mini golf: a course, the scorecard, test play', 'mg-course'], ['Mini golf: playing', 'mg-play'], ['Mini golf: starter shapes, Easy mode, fixing a hole', 'mg-quick'], ['Mini golf: moving obstacles', 'mg-moving'], ['Mini golf: games, replays and your ghost', 'mg-games'], ['Mini golf: scenes, balls and sounds', 'mg-scene'], ['Mini golf: printing a hole', 'mg-print'],
+    ['In class: for students', 'class-students'], ['In class: for teachers', 'class-teachers'], ['Hands-on lessons, written out', 'lessons'], ['Keyboard shortcuts', 'shortcuts'], ['Good to know', 'limits'], ['The Building pack: walls, rooms, roofs', 'building-pack'],
+  ],
+  eng: [
+    ['The main screen', 'screen'], ['The tool bar and the tool packs', 'tools'], ['The menus', 'eng-menus'], ['The Parts drawer', 'parts-drawer'], ['Search for any command', 'search'], ['Preferences and Project settings', 'settings'], ['Layers', 'layers'], ['Work on just this part', 'focus'],
+    ['Your first design', 'first-design'], ['Templates', 'eng-templates'], ['Run: does it work?', 'run'], ['The bar under the 3D view', 'run-bar'], ['The card: why didn\'t it work?', 'run-card'],
+    ['Machines', 'machines'], ['Gears, shafts, motors, belts, racks, cranks', 'mech-parts'], ['Machines: the ideas', 'mech-ideas'], ['Machines: what Run checks', 'mech-checks'], ['Machines from real life: winch, car, bike, clock, windmill', 'mech-real'], ['Physics you can play with: swing, sled, seesaw, hoist, trebuchet, marble', 'physics'],
+    ['Coasters', 'coasters'], ['Coasters: adding a piece', 'coaster-pieces'], ['Coasters: supports, train and riding', 'coaster-up'], ['Coasters: the ideas, and what Run checks', 'coaster-ideas'],
+    ['Structures', 'structures'], ['Drawing sticks', 'struct-draw'], ['Joints, gussets and ties', 'struct-joints'], ['Testing: weights, wind and earthquake', 'struct-load'], ['Pushed or pulled: forces', 'forces'], ['Parts, real numbers and contests', 'struct-class'],
+    ['Wires and electronics', 'wires'], ['3D printing', 'printing'], ['3D printing an object', 'print-object'], ['Joining printed pieces', 'print-connectors'], ['The 3D Print workspace', 'print-workspace'], ['Print it for me', 'print-for-me'], ['Do these parts collide?', 'print-warnings'], ['Hands-on lessons, written out', 'lessons'], ['Keyboard shortcuts', 'shortcuts'], ['Words', 'eng-words'], ['Good to know', 'limits'], ['The Building pack: walls, rooms, roofs', 'building-pack'],
+  ],
+  land: [
+    ['How to use this guide', 'start'], ['Your first yard', 'first-yard'], ['The lot and its rules', 'lot'], ['Property lines', 'property-line'], ['An aerial or drone photo under the plan', 'aerial'], ['Rights-of-way and easements', 'rights-of-way'],
+    ['Before you build: digging and permits', 'before-you-build'], ['Buried lines from the locate marks', 'buried-lines'], ['Where the snow goes', 'snow'], ['The ground', 'ground'], ['Ground heights: survey with a level, or a LiDAR file', 'heights'],
+    ['Grading a yard: cut and fill', 'grading'], ['Where the water goes: downspouts, sumps, swales', 'drainage'], ['Patios, paths, walls and lights', 'hardscape'], ['Sprinklers and drip', 'water'],
+    ['Plants and beds', 'plants'], ['The plant library', 'plant-library'], ['Your own plant photos', 'plant-photos'], ['The planting plan sheet: groups, grown sizes, legend', 'planting-plan'], ['Beds', 'beds'], ['Growth and the seasons', 'growth'], ['Privacy and views: what blocks the line of sight', 'privacy'], ['What it costs', 'money'], ['From the contractor: overhead, mobilisation, GST', 'contractor'], ['Yard phases: year by year', 'yard-phases'], ['A putting green in the yard', 'putting-green'], ['Courts, rinks and fields', 'courts'], ['A backyard rink', 'rinks'], ['What fits on my lot?', 'courts-fit'], ['Outdoor living: BBQs, seating, games, play', 'outdoor-living'], ['Built in stone', 'built-in-stone'], ['Covered patios, 3-season rooms and sunrooms', 'porch-enclosures'],
+    ['Pools, swim spas and greenhouses', 'pools'], ['Gates in a fence', 'gates'], ['Walls, fences and hedges that join where they meet', 'site-joins'], ['The lighting plan: cable runs and voltage drop', 'lighting-plan'], ['Winter wind and snow drifts', 'wind-drift'], ['This month in the yard', 'yard-months'], ['Lessons', 'lessons'],
+  ],
+};
+
+// The guide's sections ArcRes doesn't have: each heading and everything under it, to the next heading as big.
+// (The Designer set shows in ArcRes since Nov 2026, so its parts do too: the ceiling plan, the code summary,
+// the permit check, electrical and selections.)
+export const RES_HIDDEN_SECTIONS = ['house-commercial', 'life-safety', 'pdf-takeoff', 'cut-lists', 'margin', 'quote', 'change-orders'];
+// ArcRes's command search also leaves out Part 7's commercial opening and the parts inside hidden sections.
+export const RES_HIDDEN_TOPICS = [...RES_HIDDEN_SECTIONS, 'commercial'];
